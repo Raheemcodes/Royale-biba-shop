@@ -1,0 +1,24 @@
+<main>
+  <div class="loader" *ngIf="isLoading" style="text-align: center">
+  </div>
+  <div *ngIf="orders.length == 0 && !isLoading" id="empty-cart">
+    <p>Your Order List is empty.</p>
+    <button routerLink="/saved-item">View Saved Items</button>
+    <a routerLink="/products">Start Shopping</a>
+  </div>
+  <ul *ngIf="orders.length > 0 && !isLoading"  class="orders">
+    <li *ngFor="let order of orders" class="orders__item">
+      <h1>
+        Order - # {{ order._id }} -
+        <a style="color: blue; cursor: pointer; text-decoration: underline;" (click)="getInvoice(order._id)">Invoice</a>
+      </h1>
+      <ul class="orders__products">
+        <li *ngFor="let prod of order.products" class="orders__products-item">
+          {{ prod.product.title }} ({{ prod.quantity }}) - ${{
+            prod.product.price * prod.quantity
+          }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</main>

@@ -1,0 +1,93 @@
+<div class="form-cover" #authCover>
+  <h1>{{ editMode ? 'Edit' : 'Create' }} Product</h1>
+
+  <form
+    id="form-create__post"
+    class="form-control"
+    enctype="multipart/form-data"
+    [formGroup]="createForm"
+    (ngSubmit)="onSubmit(file)"
+  >
+    <div class="form-input__cover">
+      <input
+        type="text"
+        formControlName="title"
+        class="form-input"
+        placeholder="Title"
+      />
+      <span
+        class="help-block"
+        *ngIf="
+          !createForm.get('title').valid && createForm.get('title').touched
+        "
+        >Please enter a valid Title</span
+      >
+    </div>
+    <div class="form-input__cover">
+      <input
+        type="file"
+        formControlName="image"
+        id="image"
+        class="form-input"
+        placeholder="Image"
+        #file
+        (change)="imagePreview(file)"
+      />
+      <span
+        class="help-block"
+        *ngIf="
+          !createForm.get('image').valid && createForm.get('image').touched
+        "
+        >Please select an image</span
+      >
+      <img *ngIf="image" [src]="image" alt="" class="image-preview" />
+    </div>
+    <div class="form-input__cover">
+      <input
+        type="number"
+        formControlName="price"
+        class="form-input"
+        placeholder="price"
+      />
+      <span
+        class="help-block"
+        *ngIf="
+          !createForm.get('price').valid && createForm.get('price').touched
+        "
+        >Please enter a valid price</span
+      >
+    </div>
+    <button
+      type="submit"
+      class="form-btn create-btn"
+      [disabled]="!createForm.valid"
+    >
+      {{ editMode ? 'Edit' : 'Create' }}
+    </button>
+  </form>
+  <svg
+    class="back-button"
+    version="1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:svgjs="http://svgjs.com/svgjs"
+    width="512"
+    height="512"
+    x="0"
+    y="0"
+    viewBox="0 0 24 24"
+    style="enable-background: new 0 0 512 512"
+    xml:space="preserve"
+    (click)="backButton()"
+  >
+    <g>
+      <script></script>
+      <g xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2">
+        <path
+          d="m21 10h-13.172l3.586-3.586a2 2 0 0 0 -2.828-2.828l-7 7a2 2 0 0 0 0 2.828l7 7a2 2 0 1 0 2.828-2.828l-3.586-3.586h13.172a2 2 0 0 0 0-4z"
+          fill="#ff00aa"
+          data-original="#000000"
+        ></path>
+      </g>
+    </g>
+  </svg>
+</div>

@@ -1,0 +1,13 @@
+<div class="skeleton-home" *ngIf="!loaded && path == '/'">
+  <div class="skeleton-img"></div>
+  <div class="prod-lists">
+    <div class="prod-item"></div>
+    <div class="prod-item"></div>
+    <div class="prod-item"></div>
+  </div>
+</div>
+<app-header  *ngIf="loaded"></app-header>
+<div class="app-component__cover" *ngIf="loaded">
+  <router-outlet> </router-outlet>
+</div>
+<app-footer *ngIf="loaded"></app-footer>

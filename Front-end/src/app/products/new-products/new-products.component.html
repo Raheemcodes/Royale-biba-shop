@@ -1,0 +1,27 @@
+<ul id="products-list">
+  <li
+    *ngFor="let product of products; let idx = index"
+    id="{{ product._id }}"
+    class="products"
+  >
+    <div class="img-cover" routerLink="/products/{{ product._id }}">
+      <img
+        class="product-img"
+        src="{{ restApiAddress + '/' + product.imageUrl }}"
+      />
+    </div>
+    <title class="product-title">{{ product.title }}</title>
+    <h2 class="price">${{ product.price }}</h2>
+    <div class="buttons-container">
+      <button class="action-btn bag-btn" (click)="showQuantityBox(idx)">
+        BAG
+      </button>
+
+      <div class="bag-quantity__btn" #quantityBox>
+        <label for="quantity">Quantity:</label>
+        <input [(ngModel)]="quantity" id="quantity" type="number" />
+        <button (click)="onCart(product._id, quantityBox)">Add</button>
+      </div>
+    </div>
+  </li>
+</ul>

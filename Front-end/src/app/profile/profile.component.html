@@ -1,0 +1,78 @@
+<main id="profile-container">
+  <div class="profile-content">
+    <div class="profile-backcover">
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+      <div class="el"></div>
+    </div>
+    <div class="profile-display">{{ innitials }}</div>
+    <div class="profile-greetings">
+      <p>Hi, {{ firstName }}</p>
+    </div>
+  </div>
+  <div class="profile-nav-container">
+    <div class="profile-nav-cover">
+      <ul id="profile-nav" [@navWidth]="state">
+        <li
+          [routerLink]="
+            screenWidth >= 768 ? '/profile/my-orders' : '/my-orders'
+          "
+          (click)="onClick()"
+        >
+          <a>My Orders</a>
+        </li>
+        <li routerLink="/bag">
+          <a>My Bag</a>
+        </li>
+        <li
+          [routerLink]="
+            screenWidth >= 768 ? '/profile/saved-item' : '/saved-item'
+          "
+          (click)="onClick()"
+        >
+          <a>Saved Items</a>
+        </li>
+        <li
+          [routerLink]="
+            screenWidth >= 768 ? '/profile/my-details' : '/my-details'
+          "
+          (click)="onClick()"
+        >
+          <a>My Details</a>
+        </li>
+        <li>
+          <a>Address Book</a>
+        </li>
+        <li>
+          <a>Payment Method</a>
+        </li>
+        <li>
+          <a>Social account</a>
+        </li>
+        <li (click)="onLogout()">
+          <a>Log out</a>
+        </li>
+      </ul>
+      <div class="navigations">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</main>

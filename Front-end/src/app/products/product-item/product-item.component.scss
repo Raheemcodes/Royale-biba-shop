@@ -1,0 +1,171 @@
+.single-product__overview {
+  width: 100vw;
+  height: 100vw;
+  background: #eee;
+  background: linear-gradient(90deg, #ececec 8%, #fff 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+
+  img {
+    width: 100%;
+  }
+}
+
+.product-details {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 64rem) {
+  .single-product__overview {
+    width: 50vw;
+    height: 50vw;
+  }
+
+  .product-details {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .single-product__overview {
+    width: 35vw;
+    height: 35vw;
+  }
+
+  .product-details {
+    width: 35%;
+  }
+}
+
+.prod-title {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d2d2d;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.prod-price {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d2d2d;
+}
+
+.prod-main__container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  background-color: #ff66cc;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 1rem;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.buy-btn {
+  padding: 0.8rem;
+  width: 80%;
+  border-radius: 0;
+  background-color: #018849;
+}
+
+.bag-btn__icon {
+  width: 1.3rem;
+  fill: #fff;
+  margin-right: 0.7rem;
+}
+
+.bag-btn {
+  margin-top: 1.5rem;
+}
+
+.product-details__list {
+  width: 90%;
+  margin: 0;
+  padding-left: 1rem;
+  list-style: circle;
+}
+
+.product-details__list-item {
+  margin: 0.5rem;
+}
+
+span {
+  font-weight: bold;
+}
+
+label {
+  /* font-family: 'Montserrat', sans-serif; */
+  font-weight: bold;
+  /* font-size: 1.2rem; */
+}
+
+#quantity {
+  width: 3rem;
+  height: 2rem;
+  border: 1px solid #ff66cc;
+  background-color: #fff;
+  margin: 0.5rem;
+  padding: 0.3rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+select {
+  min-width: 6rem;
+  height: 2rem;
+  border: 1px solid #ff66cc;
+  background-color: #fff;
+  margin: 0.5rem;
+  padding: 0.3rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  color: black;
+}
+
+input:hover,
+input:active,
+select:hover,
+select:active {
+  border: 2px solid #ff66cc;
+  font-weight: bold;
+}
+
+optgroup {
+  background-color: #fff;
+  color: black;
+}
+
+option {
+  background-color: #fff;
+  color: black;
+}

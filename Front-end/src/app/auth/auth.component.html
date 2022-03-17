@@ -1,0 +1,259 @@
+<div class="auth-cover" #authForm>
+  <div class="auth-title__box">
+    <h1 class="auth-title login-title active" (click)="loginControl()">
+      Login
+    </h1>
+    <h1 class="auth-title signup-title" (click)="signupControl()">Signup</h1>
+  </div>
+  <div class="auth-highlight">
+    <hr />
+  </div>
+
+  <div class="back-button__cover">
+    <svg
+      class="back-button"
+      version="1.1"
+      x="0"
+      y="0"
+      viewBox="0 0 24 24"
+      xml:space="preserve"
+      (click)="backButton()"
+    >
+      <g>
+        <script></script>
+        <g xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2">
+          <path
+            d="m21 10h-13.172l3.586-3.586a2 2 0 0 0 -2.828-2.828l-7 7a2 2 0 0 0 0 2.828l7 7a2 2 0 1 0 2.828-2.828l-3.586-3.586h13.172a2 2 0 0 0 0-4z"
+            fill="#ff00aa"
+            data-original="#000000"
+          ></path>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="form-container__box">
+    <p *ngIf="error" class="error-box">{{ error }}</p>
+
+    <div class="form-container">
+      <form
+        id="form-control__login"
+        class="form-control"
+        #loginForm="ngForm"
+        (ngSubmit)="onLogin(loginForm)"
+      >
+        <div class="form-input__cover">
+          <input
+            type="text"
+            name="email"
+            [ngClass]="{
+              'form-input': true,
+              'ng-valid': !error,
+              'ng-invalid ng-touched': error
+            }"
+            placeholder="Email"
+            ngModel
+            required
+            email
+            #email="ngModel"
+          />
+          <span class="help-block" *ngIf="!email.valid && email.touched"
+            >Please enter a valid E-mail!</span
+          >
+        </div>
+        <div class="form-input__cover">
+          <input
+            type="password"
+            name="password"
+            [ngClass]="{
+              'form-input': true,
+              'ng-valid': !error,
+              'ng-invalid ng-touched': error
+            }"
+            placeholder="Password"
+            ngModel
+            required
+            minlength="8"
+            #password="ngModel"
+          />
+          <span class="help-block" *ngIf="!password.valid && password.touched"
+            >Please enter a valid password</span
+          >
+        </div>
+        <button
+          type="submit"
+          class="form-btn login"
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
+        <p><a href="/reset">Forgot Password?</a></p>
+
+        <div class="google-login__btn" (click)="onGoogleAuth()">
+          <div>
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18px"
+              height="18px"
+              viewBox="0 0 48 48"
+              class="abcRioButtonSvg"
+            >
+              <g>
+                <path
+                  fill="#EA4335"
+                  d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                ></path>
+                <path
+                  fill="#4285F4"
+                  d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                ></path>
+                <path
+                  fill="#FBBC05"
+                  d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                ></path>
+                <path
+                  fill="#34A853"
+                  d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                ></path>
+                <path fill="none" d="M0 0h48v48H0z"></path>
+              </g>
+            </svg>
+          </div>
+          <span> Sign in with Google </span>
+        </div>
+      </form>
+      <form
+        id="form-control__signup"
+        class="form-control"
+        #signupForm="ngForm"
+        (ngSubmit)="onSignup(signupForm)"
+      >
+        <div class="form-input__cover">
+          <input
+            type="text"
+            name="email"
+            [ngClass]="{
+              'form-input': true,
+              'ng-valid': !error,
+              'ng-invalid ng-touched': error
+            }"
+            placeholder="Email"
+            ngModel
+            required
+            email
+            #signupEmail="ngModel"
+          />
+          <span
+            class="help-block"
+            *ngIf="!signupEmail.valid && signupEmail.touched"
+            >Please enter a valid E-mail!</span
+          >
+        </div>
+        <div class="form-input__cover">
+          <input
+            type="text"
+            name="fullName"
+            id="full-name"
+            [ngClass]="{
+              'form-input': true,
+              'ng-valid': !error,
+              'ng-invalid ng-touched': error
+            }"
+            placeholder="Full Name"
+            ngModel
+            required
+            #name="ngModel"
+          />
+          <span class="help-block" *ngIf="!name.valid && name.touched"
+            >Please enter a valid name</span
+          >
+        </div>
+        <div class="form-input__cover">
+          <input
+            type="password"
+            name="password"
+            [ngClass]="{
+              'form-input': true,
+              'ng-valid': !error,
+              'ng-invalid ng-touched': error
+            }"
+            placeholder="Password"
+            ngModel
+            required
+            minlength="8"
+            #signupPassword="ngModel"
+          />
+          <span
+            class="help-block"
+            *ngIf="!signupPassword.valid && signupPassword.touched"
+            >Password must contain 8 characters, capital letter and
+            numbers</span
+          >
+        </div>
+        <div class="form-input__cover">
+          <input
+            type="password"
+            name="confirmPassword"
+            [ngClass]="{
+              'form-input': true,
+              'ng-valid': !error,
+              'ng-invalid ng-touched': error
+            }"
+            placeholder="Verify Password"
+            ngModel
+            ngValidateEqual="password"
+            required
+            #confirmPassword="ngModel"
+          />
+          <span
+            class="help-block"
+            *ngIf="!confirmPassword.valid && confirmPassword.touched"
+            >password has to match</span
+          >
+        </div>
+        <button
+          type="submit"
+          class="form-btn signup"
+          [disabled]="!signupForm.valid"
+        >
+          Signup
+        </button>
+
+        <div class="google-login__btn">
+          <div>
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18px"
+              height="18px"
+              viewBox="0 0 48 48"
+              class="abcRioButtonSvg"
+            >
+              <g>
+                <path
+                  fill="#EA4335"
+                  d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                ></path>
+                <path
+                  fill="#4285F4"
+                  d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                ></path>
+                <path
+                  fill="#FBBC05"
+                  d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                ></path>
+                <path
+                  fill="#34A853"
+                  d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                ></path>
+                <path fill="none" d="M0 0h48v48H0z"></path>
+              </g>
+            </svg>
+          </div>
+          <span> Sign in with Google </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

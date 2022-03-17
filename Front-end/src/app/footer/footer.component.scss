@@ -1,0 +1,126 @@
+@mixin display-flex() {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+footer {
+  width: 100vw;
+  background-color: #c0c0c067;
+  color: black;
+  @include display-flex();
+  justify-content: center;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+
+  .footer-container {
+      @include display-flex();
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      margin-right: 0;
+  }
+
+  .link-container {
+      @include display-flex();
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+  }
+
+  .footer__link {
+      margin: 0.5rem;
+
+
+      &:hover,
+      &:active {
+          cursor: pointer;
+          text-decoration: underline;
+      }
+  }
+
+  .feedback-form {
+      overflow: scroll;
+      width: 100vw;
+      height: 85vh;
+      color: whitesmoke;
+      background: linear-gradient(90deg, rgba(15, 214, 161, 0.95), rgba(226, 136, 151, 0.95));
+      position: fixed;
+      z-index: 9;
+      left: 0;
+      bottom: 0;
+      display: none;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      border-radius: 40px 40px 0 0;
+
+      @media (min-width: 45rem) {
+          height: 42rem;
+          width: 40rem;
+          overflow: hidden;
+          border-radius: 20px;
+          left: 50vw;
+          bottom: 50vh;
+          margin-left: -20rem;
+          margin-bottom: -21rem;
+      }
+
+      h2 {
+          @include display-flex();
+          justify-content: center;
+          align-items: center;
+          font-size: 2rem;
+          font-weight: normal;
+      }
+
+      p {
+          width: 80%;
+          font-size: 1.5rem;
+          margin-top: 0;
+      }
+
+      .feedback-logo {
+          width: 3rem;
+          margin-left: 0.5rem;
+          fill: whitesmoke;
+      }
+
+      form {
+          @include display-flex();
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+
+          .feedback-input {
+              color: whitesmoke;
+              background-color: transparent;
+              margin: 0.5rem;
+              padding: 1rem;
+              font-family: 'Montserrat', sans-serif;
+              font-size: 1.1rem;
+              border: 1px solid whitesmoke;
+              width: 80%;
+              border-radius: 10px;
+
+              &::placeholder {
+                  font-family: 'Montserrat', sans-serif;
+                  color: rgba(245, 245, 245, 0.6);
+              }
+          }
+
+          .feedback-button {
+              margin-top: 2rem;
+
+              &:hover,
+              &:active {
+                  background-color: whitesmoke;
+                  color: #69cc9b;
+              }
+          }
+      }
+  }
+}

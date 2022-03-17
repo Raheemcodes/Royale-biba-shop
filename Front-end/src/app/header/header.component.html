@@ -1,0 +1,545 @@
+<div [@backdrop]="state" (click)="reset()" class="backdrop"></div>
+
+<header #searchTrigger id="main-header">
+  <svg
+    (click)="headerToggleNav()"
+    viewBox="0 0 16 16"
+    class="mobile-icon toggle-button"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+    ></path>
+  </svg>
+  <svg
+    class="mobile-icon close-btn"
+    version="1.1"
+    id="Capa_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 409.806 409.806"
+    style="enable-background: new 0 0 409.806 409.806"
+    xml:space="preserve"
+  >
+    <g>
+      <g>
+        <path
+          d="M228.929,205.01L404.596,29.343c6.78-6.548,6.968-17.352,0.42-24.132c-6.548-6.78-17.352-6.968-24.132-0.42
+  c-0.142,0.137-0.282,0.277-0.42,0.42L204.796,180.878L29.129,5.21c-6.78-6.548-17.584-6.36-24.132,0.42
+  c-6.388,6.614-6.388,17.099,0,23.713L180.664,205.01L4.997,380.677c-6.663,6.664-6.663,17.468,0,24.132
+  c6.664,6.662,17.468,6.662,24.132,0l175.667-175.667l175.667,175.667c6.78,6.548,17.584,6.36,24.132-0.42
+  c6.387-6.614,6.387-17.099,0-23.712L228.929,205.01z"
+        />
+      </g>
+    </g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+  </svg>
+  <a href="/" class="logo">RoyalBiba</a>
+  <form id="search-box" (ngSubmit)="sumbitSearch(input)">
+    <input
+      id="search-input"
+      type="text"
+      placeholder="Search products..."
+      matInput
+      [matAutocomplete]="auto"
+      (input)="autoFilter(input)"
+      #input
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        (click)="sumbitSearch(input)"
+        *ngFor="let product of products; let idx = index"
+        [value]="product.title"
+        >{{ product.title }}</mat-option
+      >
+    </mat-autocomplete>
+    <button type="submit" id="search-icon__btn">
+      <svg
+        id="search-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+      >
+        <g>
+          <g>
+            <path
+              d="M141.367,116.518c-7.384-7.39-19.364-7.39-26.748,0c-27.416,27.416-40.891,65.608-36.975,104.79    c0.977,9.761,9.2,17.037,18.803,17.037c0.631,0,1.267-0.032,1.898-0.095c10.398-1.04,17.983-10.316,16.943-20.707    c-2.787-27.845,6.722-54.92,26.079-74.278C148.757,135.882,148.757,123.901,141.367,116.518z"
+            />
+          </g>
+        </g>
+        <g>
+          <g>
+            <path
+              d="M216.276,0C97.021,0,0,97.021,0,216.276s97.021,216.276,216.276,216.276s216.276-97.021,216.276-216.276    S335.53,0,216.276,0z M216.276,394.719c-98.396,0-178.443-80.047-178.443-178.443S117.88,37.833,216.276,37.833    c98.39,0,178.443,80.047,178.443,178.443S314.672,394.719,216.276,394.719z"
+            />
+          </g>
+        </g>
+        <g>
+          <g>
+            <path
+              d="M506.458,479.71L368.999,342.252c-7.39-7.39-19.358-7.39-26.748,0c-7.39,7.384-7.39,19.364,0,26.748L479.71,506.458    c3.695,3.695,8.531,5.542,13.374,5.542c4.843,0,9.679-1.847,13.374-5.542C513.847,499.074,513.847,487.094,506.458,479.71z"
+            />
+          </g>
+        </g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+      </svg>
+    </button>
+  </form>
+  <ul id="mobile-list">
+    <li class="mobile-list__item">
+      <svg
+        (click)="searchBar(searchTrigger)"
+        class="mobile-icon search-popup"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+        id="Capa_1"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+      >
+        <g>
+          <g>
+            <path
+              d="M141.367,116.518c-7.384-7.39-19.364-7.39-26.748,0c-27.416,27.416-40.891,65.608-36.975,104.79    c0.977,9.761,9.2,17.037,18.803,17.037c0.631,0,1.267-0.032,1.898-0.095c10.398-1.04,17.983-10.316,16.943-20.707    c-2.787-27.845,6.722-54.92,26.079-74.278C148.757,135.882,148.757,123.901,141.367,116.518z"
+            />
+          </g>
+        </g>
+        <g>
+          <g>
+            <path
+              d="M216.276,0C97.021,0,0,97.021,0,216.276s97.021,216.276,216.276,216.276s216.276-97.021,216.276-216.276    S335.53,0,216.276,0z M216.276,394.719c-98.396,0-178.443-80.047-178.443-178.443S117.88,37.833,216.276,37.833    c98.39,0,178.443,80.047,178.443,178.443S314.672,394.719,216.276,394.719z"
+            />
+          </g>
+        </g>
+        <g>
+          <g>
+            <path
+              d="M506.458,479.71L368.999,342.252c-7.39-7.39-19.358-7.39-26.748,0c-7.39,7.384-7.39,19.364,0,26.748L479.71,506.458    c3.695,3.695,8.531,5.542,13.374,5.542c4.843,0,9.679-1.847,13.374-5.542C513.847,499.074,513.847,487.094,506.458,479.71z"
+            />
+          </g>
+        </g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+      </svg>
+    </li>
+    <a class="mobile-list__item" routerLink="saved-item">
+      <svg
+        class="mobile-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+        id="Capa_1"
+        x="0px"
+        y="0px"
+        viewBox="0 0 477.534 477.534"
+        style="enable-background: new 0 0 477.534 477.534"
+        xml:space="preserve"
+      >
+        <g>
+          <g>
+            <path
+              d="M438.482,58.61c-24.7-26.549-59.311-41.655-95.573-41.711c-36.291,0.042-70.938,15.14-95.676,41.694l-8.431,8.909    l-8.431-8.909C181.284,5.762,98.662,2.728,45.832,51.815c-2.341,2.176-4.602,4.436-6.778,6.778    c-52.072,56.166-52.072,142.968,0,199.134l187.358,197.581c6.482,6.843,17.284,7.136,24.127,0.654    c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.77,438.482,58.61z M413.787,234.226h-0.017    L238.802,418.768L63.818,234.226c-39.78-42.916-39.78-109.233,0-152.149c36.125-39.154,97.152-41.609,136.306-5.484    c1.901,1.754,3.73,3.583,5.484,5.484l20.804,21.948c6.856,6.812,17.925,6.812,24.781,0l20.804-21.931    c36.125-39.154,97.152-41.609,136.306-5.484c1.901,1.754,3.73,3.583,5.484,5.484C453.913,125.078,454.207,191.516,413.787,234.226    z"
+            />
+          </g>
+        </g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+      </svg>
+    </a>
+    <a routerLink="bag" class="mobile-list__item activate-bag">
+      <div *ngIf="totalQuantity > 0" class="num_of__items">
+        {{ totalQuantity }}
+      </div>
+      <svg
+        class="mobile-icon activate-cart"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+        id="Capa_1"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+      >
+        <g>
+          <g>
+            <path
+              d="M467.952,427.383l-25.3-245.673c-1.045-10.187-9.627-17.93-19.867-17.93h-332.9c-10.213,0-18.789,7.717-19.861,17.877    L44.044,427.45c-2.144,21.452,5.007,43.011,19.614,59.156C78.266,502.739,98.986,512,120.511,512h271.653    c21.425,0,41.952-9.075,56.293-24.914C462.999,471.06,470.103,449.328,467.952,427.383z M418.876,460.261    c-6.898,7.603-16.385,11.791-26.712,11.791H120.518c-10.26,0-20.187-4.468-27.238-12.257c-7.051-7.79-10.506-18.13-9.494-28.257    l24.075-227.803h296.9l23.449,227.657C429.276,442.198,425.953,452.451,418.876,460.261z"
+            />
+          </g>
+        </g>
+        <g>
+          <g>
+            <path
+              d="M259.663,0c-63.144,0-114.518,51.373-114.518,114.518v69.243h39.948v-69.243c0-41.12,33.45-74.57,74.57-74.57    c41.12,0,74.576,33.45,74.576,74.57v69.243h39.941v-69.243C374.181,51.373,322.808,0,259.663,0z"
+            />
+          </g>
+        </g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+      </svg>
+    </a>
+    <a class="mobile-list__item options" (click)="openDropDown()">
+      <svg
+        class="mobile-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svgjs="http://svgjs.com/svgjs"
+        x="0"
+        y="0"
+        viewBox="0 0 32 32"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+      >
+        <g>
+          <script></script>
+          <g
+            xmlns="http://www.w3.org/2000/svg"
+            id="Layer_2"
+            data-name="Layer 2"
+          >
+            <circle
+              cx="16"
+              cy="5"
+              r="4"
+              fill="#ff66cc"
+              data-original="#000000"
+              class=""
+            ></circle>
+            <circle
+              cx="16"
+              cy="16"
+              r="4"
+              fill="#ff66cc"
+              data-original="#000000"
+              class=""
+            ></circle>
+            <circle
+              cx="16"
+              cy="27"
+              r="4"
+              fill="#ff66cc"
+              data-original="#000000"
+              class=""
+            ></circle>
+          </g>
+        </g>
+      </svg>
+      <div
+        class="account-dropdown__menu"
+        (mouseover)="enterDropDown()"
+        (mouseleave)="closeDropDown()"
+      >
+        <div class="arrow-up"></div>
+        <div class="account-drop__down-lists">
+          <div
+            class="account-dropdown__content profile"
+            *ngIf="isAuthenticated"
+          >
+            <div class="avi">
+              {{ user.name.split(' ')[1][0] + user.name[0] }}
+            </div>
+            <p>Hi, {{ user.name.split(' ')[1] }}</p>
+          </div>
+          <a
+            class="account-dropdown__content"
+            routerLink="auth"
+            *ngIf="!isAuthenticated"
+            ><svg
+              version="1.1"
+              id="Ebene_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 64 64"
+              enable-background="new 0 0 64 64"
+              xml:space="preserve"
+            >
+              <g>
+                <path
+                  d="M32,42c8.673,0,16-8.701,16-19S40.673,4,32,4s-16,8.701-16,19S23.327,42,32,42z M32,8c6.505,0,12,6.869,12,15
+                    s-5.495,15-12,15s-12-6.869-12-15S25.495,8,32,8z"
+                ></path>
+                <path
+                  d="M4.103,45.367l-4,12c-0.203,0.61-0.101,1.28,0.275,1.802C0.753,59.691,1.357,60,2,60h60c0.643,0,1.247-0.309,1.622-0.831
+                    c0.376-0.521,0.479-1.191,0.275-1.802l-4-12c-0.209-0.626-0.713-1.108-1.348-1.29l-14-4c-0.482-0.139-0.996-0.09-1.444,0.134
+                    L32,45.764l-11.105-5.553c-0.448-0.224-0.962-0.272-1.444-0.134l-14,4C4.815,44.259,4.312,44.741,4.103,45.367z M19.802,44.137
+                    l11.304,5.652c0.562,0.281,1.227,0.281,1.789,0l11.304-5.652l12.238,3.496L59.226,56H4.774l2.789-8.367L19.802,44.137z"
+                ></path>
+                <path
+                  d="M62,6h-4V2c0-1.104-0.896-2-2-2s-2,0.896-2,2v4h-4c-1.104,0-2,0.896-2,2s0.896,2,2,2h4v4c0,1.104,0.896,2,2,2s2-0.896,2-2
+                    v-4h4c1.104,0,2-0.896,2-2S63.104,6,62,6z"
+                ></path>
+              </g>
+            </svg>
+            Signup</a
+          >
+          <a
+            class="account-dropdown__content"
+            routerLink="auth"
+            *ngIf="!isAuthenticated"
+            ><svg
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 512 512"
+              style="enable-background: new 0 0 512 512"
+              xml:space="preserve"
+            >
+              <g>
+                <g>
+                  <g>
+                    <path
+                      d="M131.5,472H60.693c-8.538,0-13.689-4.765-15.999-7.606c-3.988-4.906-5.533-11.29-4.236-17.519
+                            c20.769-99.761,108.809-172.616,210.445-174.98c1.693,0.063,3.39,0.105,5.097,0.105c1.722,0,3.434-0.043,5.142-0.107
+                            c24.853,0.567,49.129,5.24,72.236,13.917c10.34,3.885,21.871-1.352,25.754-11.693c3.883-10.34-1.352-21.871-11.693-25.754
+                            c-3.311-1.244-6.645-2.408-9.995-3.512C370.545,220.021,392,180.469,392,136C392,61.01,330.991,0,256,0
+                            c-74.991,0-136,61.01-136,136c0,44.509,21.492,84.092,54.643,108.918c-30.371,9.998-58.871,25.546-83.813,46.062
+                            c-45.732,37.617-77.529,90.086-89.532,147.743c-3.762,18.066,0.744,36.622,12.363,50.908C25.221,503.847,42.364,512,60.693,512
+                            H131.5c11.046,0,20-8.954,20-20C151.5,480.954,142.546,472,131.5,472z M160,136c0-52.935,43.065-96,96-96s96,43.065,96,96
+                            c0,51.367-40.554,93.438-91.326,95.885c-1.557-0.028-3.114-0.052-4.674-0.052c-1.564,0-3.127,0.023-4.689,0.051
+                            C200.546,229.43,160,187.362,160,136z"
+                    ></path>
+                    <path
+                      d="M496.689,344.607c-8.561-19.15-27.845-31.558-49.176-31.607h-62.372c-0.045,0-0.087,0-0.133,0
+                            c-22.5,0-42.13,13.26-50.029,33.807c-1.051,2.734-2.336,6.178-3.677,10.193H200.356c-5.407,0-10.583,2.189-14.35,6.068
+                            l-34.356,35.388c-7.567,7.794-7.529,20.203,0.085,27.95l35,35.612c3.76,3.826,8.9,5.981,14.264,5.981h65c11.046,0,20-8.954,20-20
+                            c0-11.046-8.954-20-20-20h-56.614l-15.428-15.698L208.814,397h137.491c9.214,0,17.235-6.295,19.426-15.244
+                            c1.618-6.607,3.648-12.959,6.584-20.596c1.936-5.036,6.798-8.16,12.741-8.16c0.013,0,0.026,0,0.039,0h62.371
+                            c5.656,0.013,10.524,3.053,12.705,7.932c5.369,12.012,11.78,30.608,11.828,50.986c0.048,20.529-6.356,39.551-11.739,51.894
+                            c-2.17,4.978-7.079,8.188-12.56,8.188c-0.011,0-0.022,0-0.033,0h-63.125c-5.533-0.013-10.716-3.573-12.896-8.858
+                            c-2.339-5.671-4.366-12.146-6.197-19.797c-2.571-10.742-13.367-17.366-24.105-14.796c-10.743,2.571-17.367,13.364-14.796,24.106
+                            c2.321,9.699,4.978,18.118,8.121,25.738c8.399,20.364,27.939,33.555,49.827,33.606h63.125c0.043,0,0.083,0,0.126,0
+                            c21.351-0.001,40.647-12.63,49.18-32.201c6.912-15.851,15.137-40.511,15.072-67.975
+                            C511.935,384.434,503.638,360.153,496.689,344.607z"
+                    ></path>
+                    <circle cx="431" cy="412" r="20"></circle>
+                  </g>
+                </g>
+              </g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+            </svg>
+            Login</a
+          >
+          <a class="account-dropdown__content" routerLink="profile">
+            <svg
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 512 512"
+              style="enable-background: new 0 0 512 512"
+              xml:space="preserve"
+            >
+              <g>
+                <g>
+                  <path
+                    d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+        C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+        c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+        h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+        c59.551,0,108,48.448,108,108S315.551,256,256,256z"
+                  ></path>
+                </g>
+              </g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+              <g></g>
+            </svg>
+            My Account
+          </a>
+          <a class="account-dropdown__content" routerLink="products"
+            >Products</a
+          >
+          <a class="account-dropdown__content" routerLink="products/new-in"
+            >New In</a
+          >
+          <a
+            *ngIf="isAuthenticated && isAdmin"
+            class="account-dropdown__content"
+            routerLink="create-products"
+            >Create Post</a
+          >
+          <a
+            *ngIf="isAuthenticated && isAdmin"
+            class="account-dropdown__content"
+            routerLink="modify-products"
+            >Modify Products</a
+          >
+          <a
+            class="account-dropdown__content"
+            *ngIf="isAuthenticated"
+            (click)="onLogout()"
+            >Logout</a
+          >
+        </div>
+      </div>
+    </a>
+  </ul>
+</header>
+<nav [@navTrans]="state" class="navbar">
+  <ul class="nav-list">
+    <li routerLink="profile" class="nav-item profile" *ngIf="isAuthenticated" (click)="reset()">
+      <a >
+        <div class="avi">{{ user.name.split(' ')[1][0] + user.name[0] }}</div>
+        <p>Hi, {{ user.name.split(' ')[1] }}</p>
+      </a>
+    </li>
+    <li routerLink="/" class="nav-item" (click)="reset()">
+      <a>Home</a>
+    </li>
+    <li routerLink="products" class="nav-item all-products" (click)="reset()">
+      <a>Products</a>
+    </li>
+    <li routerLink="/products/new-in" class="nav-item" (click)="reset()">
+      <a >New In</a>
+    </li>
+    <li class="nav-item">Contact US</li>
+    <li
+      routerLink="create-products"
+      (click)="midNav()"
+      class="nav-item create-post"
+      *ngIf="isAuthenticated && isAdmin"
+    >
+      <a>Create Post</a>
+    </li>
+    <li
+      routerLink="modify-products"
+      (click)="reset()"
+      class="nav-item edit-post"
+      *ngIf="isAuthenticated && isAdmin"
+    >
+      <a>Modify Products</a>
+    </li>
+    <a
+      class="nav-item login-btn"
+      routerLink="auth"
+      *ngIf="!isAuthenticated"
+      (click)="midNav()"
+      >Login</a
+    >
+    <a
+      class="nav-item signup-btn"
+      routerLink="auth"
+      *ngIf="!isAuthenticated"
+      (click)="midNav()"
+      >Signup</a
+    >
+    <a class="nav-item logout-btn" *ngIf="isAuthenticated" (click)="onLogout()"
+      >Logout</a
+    >
+  </ul>
+</nav>

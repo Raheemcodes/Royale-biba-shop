@@ -1,0 +1,30 @@
+<div id="search-container">
+  <p *ngIf="products.length == 0">
+    No product containing "{{ input }}" in the title was found.
+  </p>
+  <ul id="search-list">
+    <li
+      *ngFor="let product of products"
+      id="{{ product._id }}"
+      class="products"
+    >
+      <div class="img-cover" routerLink="/products/{{ product._id }}">
+        <img
+          class="product-img"
+          src="{{ restApiAddress + '/' + product.imageUrl }}"
+          [alt]="product.title"
+        />
+      </div>
+      <title class="product-title">{{ product.title }}</title>
+      <h2 class="price">${{ product.price }}</h2>
+      <div class="buttons-container">
+        <button class="action-btn bag-btn">BAG</button>
+        <div class="bag-quantity__btn">
+          <label for="quantity">Quantity:</label>
+          <input id="quantity" type="number" value="1" />
+          <button>Add</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

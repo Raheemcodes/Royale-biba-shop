@@ -1,0 +1,112 @@
+<section class="single-product__overview">
+  <img
+    src="{{ restApiAddress + '/' + product.imageUrl }}"
+    [alt]="product.title"
+  />
+</section>
+<section class="product-details">
+  <div class="prod-main__container">
+    <div class="main-container">
+      <p class="prod-title">{{ product.title }}</p>
+      <h1 class="prod-price">${{ product.price }}</h1>
+    </div>
+    <div class="main-container">
+      <button
+        class="product-btn buy-btn"
+        (click)="onCheckout(product._id, quantity)"
+      >
+        Buy Now
+      </button>
+    </div>
+  </div>
+  <p></p>
+  <h2>Product Details</h2>
+  <ul class="product-details__list">
+    <li class="product-details__list-item">
+      <span>Status:</span>
+      In Stock
+    </li>
+    <li class="product-details__list-item">
+      <label for="color">Color: </label>
+      <select name="color" class="color">
+        <option value="Black">Black</option>
+        <option value="Blue">Blue</option>
+      </select>
+    </li>
+    <li class="product-details__list-item">
+      <label for="memory">Size: </label>
+      <select name="color" class="color">
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </li>
+    <li class="product-details__list-item">
+      <label for="quantity">Quantity: </label>
+      <input
+        id="quantity"
+        type="number"
+        name="quantity"
+        #quantity
+        value="1"
+        min="1"
+      />
+    </li>
+  </ul>
+
+  <button
+    (click)="onCart(product._id, quantity)"
+    [id]="product._id"
+    class="product-btn bag-btn"
+  >
+    <svg
+      class="bag-btn__icon"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      id="Capa_1"
+      x="0px"
+      y="0px"
+      viewBox="0 0 512 512"
+      style="enable-background: new 0 0 512 512"
+      xml:space="preserve"
+    >
+      <g>
+        <g>
+          <path
+            d="M467.952,427.383l-25.3-245.673c-1.045-10.187-9.627-17.93-19.867-17.93h-332.9c-10.213,0-18.789,7.717-19.861,17.877    L44.044,427.45c-2.144,21.452,5.007,43.011,19.614,59.156C78.266,502.739,98.986,512,120.511,512h271.653    c21.425,0,41.952-9.075,56.293-24.914C462.999,471.06,470.103,449.328,467.952,427.383z M418.876,460.261    c-6.898,7.603-16.385,11.791-26.712,11.791H120.518c-10.26,0-20.187-4.468-27.238-12.257c-7.051-7.79-10.506-18.13-9.494-28.257    l24.075-227.803h296.9l23.449,227.657C429.276,442.198,425.953,452.451,418.876,460.261z"
+          ></path>
+        </g>
+      </g>
+      <g>
+        <g>
+          <path
+            d="M259.663,0c-63.144,0-114.518,51.373-114.518,114.518v69.243h39.948v-69.243c0-41.12,33.45-74.57,74.57-74.57    c41.12,0,74.576,33.45,74.576,74.57v69.243h39.941v-69.243C374.181,51.373,322.808,0,259.663,0z"
+          ></path>
+        </g>
+      </g>
+      <g></g>
+    </svg>
+    Add To Bag
+  </button>
+
+  <h2>Features</h2>
+  <ul class="product-details__list">
+    <li class="product-details__list-item">
+      <span>Lorem Ipsum:</span>
+      ipsum dolor
+    </li>
+    <li class="product-details__list-item">
+      <span>Lorem Ipsum:</span>
+      ipsum dolor
+    </li>
+    <li class="product-details__list-item">
+      <span>Lorem Ipsum:</span>
+      ipsum dolor
+    </li>
+    <li class="product-details__list-item">
+      <span>Lorem Ipsum:</span>
+      ipsum dolor
+    </li>
+  </ul>
+</section>

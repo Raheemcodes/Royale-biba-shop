@@ -1,0 +1,30 @@
+<div id="products-container">
+  <ul id="products-list">
+    <li
+      *ngFor="let product of products; let i = index"
+      id="{{ product._id }}"
+      class="products"
+    >
+      <img class="product-img" src="{{ restApiAddress + '/' + product.imageUrl }}" />
+      <title class="product-title">{{ product.title }}</title>
+      <h2 class="price">${{ product.price }}</h2>
+      <div class="buttons-container">
+        <button
+          type="button"
+          class="action-btn edit-btn"
+          [routerLink]="['/create-products', i]"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="action-btn del-btn"
+          routerLinkActive="router-link-active"
+          (click)="onDeleteProd(product._id)"
+        >
+          Delete
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
