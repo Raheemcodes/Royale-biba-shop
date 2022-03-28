@@ -43,7 +43,7 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe((user) => {
       if (!!user) {
-        location.href = '';
+        history.back()
       }
     });
   }
