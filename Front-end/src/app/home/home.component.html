@@ -12,67 +12,64 @@
     ></div>
   </div>
   <div class="background-container">
-    <div id="product-overview1" class="overview">
+    <div id="product-overview1" class="overview lazy">
       <h1>Get that exceptional look</h1>
     </div>
-    <div id="product-overview2" class="overview">
+    <div id="product-overview2" class="overview lazy">
       <h1>Lorem ipsum dolor sit amet</h1>
     </div>
-    <div id="product-overview5" class="overview">
+    <div id="product-overview5" class="overview lazy">
       <h1>Lorem ipsum dolor sit amet</h1>
     </div>
-    <div id="product-overview6" class="overview">
+    <div id="product-overview6" class="overview lazy">
       <h1>Lorem ipsum dolor sit amet</h1>
     </div>
-    <div id="product-overview7" class="overview">
+    <div id="product-overview7" class="overview lazy">
       <h1>Lorem ipsum dolor sit amet</h1>
     </div>
-    <div id="product-overview8" class="overview">
+    <div id="product-overview8" class="overview lazy">
       <h1>Lorem ipsum dolor sit amet</h1>
     </div>
-    <div id="product-overview9" class="overview">
+    <div id="product-overview9" class="overview lazy">
       <h1>Lorem ipsum dolor sit amet</h1>
     </div>
-    <div id="product-overview1" class="overview">
+    <div id="product-overview1" class="overview lazy">
       <h1>Get that exceptional look</h1>
     </div>
   </div>
 </section>
-<section *ngIf="newProducts.length >= 3" id="new-in">
+<section id="new-in">
   <h1>New In</h1>
-  <div *ngIf="newProducts.length >= 5" class="pagination-contanier">
-    <div
-      *ngFor="let product of newProducts; let i = index"
-      [ngClass]="{ pagination: true, 'active-pagination': i == currentIndex }"
-      [style]="i == 0 || i == lastSlide ? 'display: none' : ''"
-    ></div>
-  </div>
+
   <div class="slide">
-    <ul class="new-in__lists" #slide>
+    <ul class="new-in__lists" #slide *ngIf="!loading && newProducts.length > 0">
       <li
         *ngFor="let product of newProducts; let idx = index"
         id="{{ product._id }}"
         class="new-in__product"
-        (touchstart)="onTouchStart($event, idx)"
-        (touchmove)="onTouchMove($event)"
-        (touchend)="onTouchEnd($event)"
       >
         <div class="new-image__cover" routerLink="/products/{{ product._id }}">
           <img
+            width="414"
+            height="414"
             class="product-img"
+            loading="lazy"
             src="{{ restApiAddress + '/' + product.imageUrl }}"
             [alt]="product.title"
           />
         </div>
-        <title class="product-title">{{ product.title }}</title>
-        <h2 class="price">${{ product.price }}</h2>
+        <div>
+          <title class="product-title">{{ product.title }}</title>
+          <h2 class="price">${{ product.price }}</h2>
+        </div>
       </li>
     </ul>
+    <p *ngIf="loading">Loading...</p>
   </div>
   <a routerLink="/products/new-in">More newly added products >></a>
 </section>
 <section id="advert">
-  <div class="advert-image">
+  <div class="advert-image lazy">
     <div class="advert-overlay">
       <div class="advert-content">
         <h1>Lorem Ipsum</h1>
@@ -85,7 +82,7 @@
     </div>
   </div>
 </section>
-<section>
+<section *ngIf="isAuthenticated">
   <div class="sign-up__section">
     <h3 class="sign-up__title">
       Start shooping at RoyalBiba Online-Store today

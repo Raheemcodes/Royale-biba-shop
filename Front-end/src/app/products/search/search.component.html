@@ -4,7 +4,7 @@
   </p>
   <ul id="search-list">
     <li
-      *ngFor="let product of products"
+      *ngFor="let product of products; let idx = index"
       id="{{ product._id }}"
       class="products"
     >
@@ -15,14 +15,24 @@
           [alt]="product.title"
         />
       </div>
+
       <title class="product-title">{{ product.title }}</title>
       <h2 class="price">${{ product.price }}</h2>
       <div class="buttons-container">
-        <button class="action-btn bag-btn">BAG</button>
-        <div class="bag-quantity__btn">
+        <button class="action-btn bag-btn" (click)="showQuantityBox(idx)">
+          BAG
+        </button>
+
+        <div class="bag-quantity__btn" #quantityBox>
           <label for="quantity">Quantity:</label>
-          <input id="quantity" type="number" value="1" />
-          <button>Add</button>
+          <input
+            [(ngModel)]="quantity"
+            id="quantity"
+            type="number"
+            min="1"
+            required
+          />
+          <button (click)="onCart(product._id, quantityBox)">Add</button>
         </div>
       </div>
     </li>

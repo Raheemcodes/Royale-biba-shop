@@ -43,19 +43,19 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe((user) => {
       if (!!user) {
-        history.back()
+        this.router.navigate(['../'], {relativeTo: this.route});
       }
     });
   }
 
   ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
     const authForm = this.authForm.nativeElement;
     this.backdrop = document.querySelector('.backdrop');
     this.loginTitle = authForm.querySelector('.login-title');
     this.signupTitle = authForm.querySelector('.signup-title');
     this.formContainer = authForm.querySelector('.form-container');
     this.underline = authForm.querySelector('hr');
-    if (isPlatformBrowser(this.platformId)) {
       this.openLoginForm();
     }
   }

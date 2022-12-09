@@ -8,9 +8,10 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  path: string = location.pathname;
   title = 'RoyaleBiba-Angular';
   loaded: boolean = false;
+  loadComponet: boolean = false;
+  timeout: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -20,9 +21,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.authService.autoLogin();
+      this.timeout = 3000;
+      document.body.style.overflow = 'hidden';
+      this.loadComponet = true;
+
       setTimeout(() => {
+        document.body.removeAttribute('style');
         this.loaded = true;
-      }, 3000);
+      }, this.timeout);
     }
   }
 }

@@ -27,6 +27,7 @@
       "resources": {
         "files": [
           "/assets/**",
+          "/assets/images/**",
           "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
@@ -36,13 +37,15 @@
     {
       "name": "httprequests",
       "urls": [
+        "http://localhost:3000/**",
         "https://restapi-mobile-store.herokuapp.com/**",
-        "https://js.stripe.com/**"
+        "https://js.stripe.com/**",
+        "https://m.stripe.com/**"
       ],
       "cacheConfig": {
-        "maxSize": 1,
+        "maxSize": 50,
         "maxAge": "6h",
-        "timeout": "10s",
+        "timeout": "0u",
         "strategy": "freshness"
       }
     }

@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
@@ -17,15 +27,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   quantity: number = 1;
   userSub: Subscription;
   isAuthenticated: Boolean = false;
-  screenWidth: number = 0;
-  startPos = 0;
-  currentTranslate = 0;
-  prevTranslate = -innerWidth;
-  currentIndex = 1;
-  slider: HTMLElement;
-  lastSlide: number = 4;
+  @ViewChild('slide') slider: ElementRef<HTMLElement>;
   restApiAddress: string = environment.restApiAddress;
-  load: boolean = true;
+  loading: boolean = true;
   interval: any;
   slidePagination: HTMLCollection;
   backgroundSlide: HTMLElement;
@@ -37,33 +41,58 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private productsService: ProductsService,
     private authService: AuthService,
     private cartService: CartService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId
   ) {}
 
   ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe((user) => {
-      this.isAuthenticated = !!user;
-    });
-    this.newProducts = this.productsService.getNewProducts().slice(0, 3);
-    if (innerWidth < 768 && this.newProducts.length == 3) {
-      this.newProducts.push(this.newProducts[0]);
-      this.newProducts.unshift(this.newProducts[this.newProducts.length - 2]);
+    if (isPlatformBrowser(this.platformId)) {
+      this.userSub = this.authService.user.subscribe((user) => {
+        this.isAuthenticated = !!user;
+      });
+
+      this.getProduct();
+
+      this.backgroundSlideItem = Array.from(
+        document.getElementsByClassName('overview')
+      );
     }
-    window.onresize = this.resetSlide.bind(this);
-    this.backgroundSlideItem = Array.from(
-      document.getElementsByClassName('overview'),
-    );
+  }
+
+  getProduct() {
+    const products = this.productsService.getProducts();
+
+    if (products.length == 0) {
+      this.productsService.fetchProducts().subscribe({
+        next: (products: Product[]) => {
+          this.loading = false;
+          this.newProducts = this.getNewProducts(products).slice(0, 3);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    } else {
+      this.loading = false;
+      this.newProducts = this.getNewProducts(products).slice(0, 3);
+    }
+  }
+
+  getNewProducts(products: Product[]) {
+    const lenght: number = products.length;
+    return [products[lenght - 3], products[lenght - 1], products[lenght - 2]];
   }
 
   ngAfterViewInit(): void {
-    this.backdrop = document.querySelector('.backdrop');
-    this.slider = document.querySelector('.new-in__lists');
-    this.backgroundSlide = document.querySelector('.background-container');
-    this.slidePagination = document.getElementsByClassName('slide-pagination');
+    this.lazyLoading();
 
-    this.resetSlide();
+    if (isPlatformBrowser(this.platformId)) {
+      this.backdrop = document.querySelector('.backdrop');
+      this.backgroundSlide = document.querySelector('.background-container');
+      this.slidePagination =
+        document.getElementsByClassName('slide-pagination');
 
-    this.interval = setInterval(this.translateBackground.bind(this), 3000);
+      this.interval = setInterval(this.translateBackground.bind(this), 3000);
+    }
   }
 
   translateBackground() {
@@ -89,70 +118,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.backgroundSlide.style.transform = `translateX(${-100 * index}vw)`;
   }
 
-  onTouchStart(e, idx) {
-    if (innerWidth >= 768) return;
-    this.currentIndex = idx;
-    this.startPos = e.touches[0].clientX;
-    this.slider.style.transition = 'none';
-    this.move = false;
-  }
-
-  onTouchMove(e) {
-    this.move = true;
-    e.preventDefault();
-    if (innerWidth >= 768) return;
-    const currentPosition = e.touches[0].clientX;
-    this.currentTranslate =
-      this.prevTranslate + currentPosition - this.startPos;
-    this.setSliderPosition();
-  }
-
-  onTouchEnd(e) {
-    if (!this.move) return;
-    if (innerWidth >= 768) return;
-    const movedBy = this.currentTranslate - this.prevTranslate;
-
-    // if moved enough negative then snap to next slide if there is one
-    if (movedBy < -innerWidth / 4) {
-      this.currentIndex++;
-      if (this.currentIndex >= this.lastSlide) this.currentIndex = 1;
-    }
-
-    // if moved enough positive then snap to previous slide if there is one
-    if (movedBy > innerWidth / 4) {
-      this.currentIndex--;
-      if (this.currentIndex <= 0) this.currentIndex = 3;
-    }
-    // this.slider.style.transition = 'transform 0.5s linear';
-    this.setPositionByIndex();
-  }
-
-  setSliderPosition() {
-    this.slider.style.transform = `translateX(${this.currentTranslate}px)`;
-  }
-
-  setPositionByIndex() {
-    this.currentTranslate = this.currentIndex * -window.innerWidth;
-    this.prevTranslate = this.currentTranslate;
-    this.setSliderPosition();
-  }
-
-  resetSlide() {
-    if (innerWidth >= 768 && this.newProducts.length > 3) {
-      this.slider.removeAttribute('style');
-      this.newProducts.shift();
-      this.newProducts.pop();
-    }
-    if (innerWidth < 768 && this.newProducts.length <= 3) {
-      this.newProducts.unshift(this.newProducts[this.newProducts.length - 2]);
-      this.newProducts.push(this.newProducts[0]);
-      this.currentIndex = 1;
-      this.prevTranslate = -innerWidth;
-      this.currentTranslate = 0;
-      this.startPos = 0;
-    }
-  }
-
   showQuantityBox(idx) {
     const quantityBox: any = document.querySelectorAll('.bag-quantity__btn');
 
@@ -174,6 +139,63 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         quantityForm.style.display = 'none';
         this.backdrop.style.display = 'none';
       });
+  }
+
+  lazyLoading() {
+    let lazyloadImages;
+
+    if ('IntersectionObserver' in window) {
+      lazyloadImages = document.querySelectorAll('.lazy');
+      const imageObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const image = entry.target as any;
+              image.src = image.dataset.src;
+              image.alt = image.dataset.alt;
+              image.classList.remove('lazy');
+              imageObserver.unobserve(image);
+            }
+          });
+        },
+        {
+          rootMargin: '0px 0px 200px 0px',
+        }
+      );
+
+      lazyloadImages.forEach((image) => {
+        imageObserver.observe(image);
+      });
+    } else {
+      let lazyloadThrottleTimeout;
+      lazyloadImages = document.querySelectorAll('.lazy');
+
+      function lazyload() {
+        if (lazyloadThrottleTimeout) {
+          clearTimeout(lazyloadThrottleTimeout);
+        }
+
+        lazyloadThrottleTimeout = setTimeout(() => {
+          const scrollTop = window.pageYOffset;
+          lazyloadImages.forEach((img) => {
+            if (img.offsetTop < window.innerHeight + scrollTop + 200) {
+              img.src = img.dataset.src;
+              img.alt = img.dataset.alt;
+              img.classList.remove('lazy');
+            }
+          });
+          if (lazyloadImages.length == 0) {
+            document.removeEventListener('scroll', lazyload);
+            window.removeEventListener('resize', lazyload);
+            window.removeEventListener('orientationChange', lazyload);
+          }
+        }, 20);
+      }
+
+      document.addEventListener('scroll', lazyload);
+      window.addEventListener('resize', lazyload);
+      window.addEventListener('orientationChange', lazyload);
+    }
   }
 
   ngOnDestroy(): void {

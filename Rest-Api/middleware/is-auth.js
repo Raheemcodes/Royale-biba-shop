@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   let decodedToken;
   try {
+    // change to a global variable
     decodedToken = jwt.verify(token, 'somesuperraheemsecret');
   } catch (err) {
     err.statusCode = 500;

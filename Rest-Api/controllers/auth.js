@@ -3,26 +3,53 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { OAuth2Client } = require('google-auth-library');
-const CLIENT_ID = process.env.CLIENT_ID;
-
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-
-const REDIRECT_URI = process.env.REDIRECT_URI;
-
-const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.NODEMAIL_GMAIL,
-    pass: process.env.NODEMAILER_PASS,
-  },
-});
+const CLIENT_ID = process.env.CLIENT_ID;
+
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+const REDIRECT_URI = process.env.REDIRECT_URI;
+
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+
+const FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
+
+const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+
+client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+async function sendMail(email, subject, mail) {
+  try {
+    const accessToken = await client.getAccessToken();
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.NODEMAIL_GMAIL,
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken,
+      },
+    });
+
+    await transport.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject,
+      generateTextFromHTML: true,
+      html: mail,
+    });
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 exports.signup = async (req, res, next) => {
   try {
@@ -42,7 +69,6 @@ exports.signup = async (req, res, next) => {
     const user = new User({
       email: email,
       name: name,
-      // admin: false,
       password: hashedPassword,
       cart: { items: [] },
     });
@@ -51,58 +77,57 @@ exports.signup = async (req, res, next) => {
 
     res.status(200).json({ message: 'Signup successful!', userId: user._id });
 
-    await transporter.sendMail({
-      to: email,
-      from: 'yraheem21@gmail.com',
-      subject: 'Singup suceeded!',
-      html: `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-        <title>Document</title>
-        <style>
-          body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-          }
-          h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
-          }
-          a,
-          a:visited,
-          a:focus,
-          a:hover,
-          a:active {
-            border-radius: 5px;
-            background-color: #ff66cc;
-            color: white !important;
-            padding: 0.5rem 1rem;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.5rem;
-            font-family: 'Montserrat', sans-serif;
-            text-decoration: none;
-          }
-        </style>
-      </head>
-      <body>
-      <h1>You successfully signed up!</h1>
-      <a href="${REDIRECT_URI}">Login</a>
-      </body>
-      </html>
-      `,
-    });
+    await sendMail(
+      email,
+      'Sign up suceeded!',
+      `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+      <title>Document</title>
+      <style>
+        body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+        h1 {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 3rem;
+        }
+        a,
+        a:visited,
+        a:focus,
+        a:hover,
+        a:active {
+          border-radius: 5px;
+          background-color: #ff66cc;
+          color: white !important;
+          padding: 0.5rem 1rem;
+          text-align: center;
+          font-weight: bold;
+          font-size: 1.5rem;
+          font-family: 'Montserrat', sans-serif;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+    <h1>You successfully signed up!</h1>
+    <a href="${FRONTEND_ADDRESS}/auth">Login</a>
+    </body>
+    </html>
+    `
+    );
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -144,7 +169,7 @@ exports.login = async (req, res, next) => {
         userId: loadedUser._id.toString(),
       },
       'somesuperraheemsecret',
-      { expiresIn: '2h' },
+      { expiresIn: '2h' }
     );
     res.status(200).json({
       email: loadedUser.email,
@@ -205,7 +230,7 @@ exports.googleAuth = async (req, res, next) => {
         userId: loadedUser._id,
       },
       'somesuperraheemsecret',
-      { expiresIn: '2d' },
+      { expiresIn: '2d' }
     );
     res.status(200).json({
       email: loadedUser.email,

@@ -9,7 +9,6 @@ const routes = [
   {
     path: '',
     component: HomeComponent,
-    resolve: [ProductsResolverService],
     children: [
       { path: 'auth', component: AuthComponent },
       { path: 'create-products', component: CreateProductsComponent },

@@ -8,24 +8,24 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync, readFileSync } from 'fs';
 
-const domino = require('domino');
-// const fs = require('fs');
-const path = require('path');
+// const domino = require('domino');
+// // const fs = require('fs');
+// const path = require('path');
 
-// Use the browser index.html as template for the mock window
-const template = readFileSync(
-  path.join(
-    join(process.cwd(), 'dist/RoyaleBiba-Angular/browser'),
-    'index.html',
-  ),
-).toString();
+// // Use the browser index.html as template for the mock window
+// const template = readFileSync(
+//   path.join(
+//     join(process.cwd(), 'dist/RoyaleBiba-Angular/browser'),
+//     'index.html',
+//   ),
+// ).toString();
 
 // Shim for the global window and document objects.
-const window = domino.createWindow(template);
-global['window'] = window;
-global['document'] = window.document;
-global['location'] = window.location;
-global['innerWidth'] = window.innerWidth;
+// const window = domino.createWindow(template);
+// global['window'] = window;
+// global['document'] = window.document;
+// global['location'] = window.location;
+// global['innerWidth'] = window.innerWidth;
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -46,6 +46,13 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
+  // server.use((req, res, next) => {
+  //   if (req.header('x-forwarded-proto') !== 'https') {
+  //     res.redirect(`https://${req.header('host')}${req.url}`)
+  //   } else {
+  //     next();
+  //   }
+  // });
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser

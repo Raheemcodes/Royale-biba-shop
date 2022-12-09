@@ -1,34 +1,7 @@
-
-// @use '@angular/material' as mat;
-
-// @include mat.core();
-
-// $RoyaleBiba-Angular-primary: mat.define-palette(mat.$indigo-palette);
-// $RoyaleBiba-Angular-accent: mat.define-palette(
-//   mat.$pink-palette,
-//   A200,
-//   A100,
-//   A400
-// );
-
-// $RoyaleBiba-Angular-warn: mat.define-palette(mat.$red-palette);
-
-// $RoyaleBiba-Angular-theme: mat.define-light-theme(
-//   (
-//     color: (
-//       primary: $RoyaleBiba-Angular-primary,
-//       accent: $RoyaleBiba-Angular-accent,
-//       warn: $RoyaleBiba-Angular-warn,
-//     ),
-//   )
-// );
-
-// @include mat.all-component-themes($RoyaleBiba-Angular-theme);
-
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 * {
   box-sizing: border-box;
@@ -37,6 +10,20 @@
   &:focus {
     outline: none;
   }
+
+  &::-webkit-scrollbar {
+    width: 7px; /* width of the entire scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(172, 172, 172); /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border: 3px solid transparent; /* creates padding around scroll thumb */
+  }
 }
 
 body {
@@ -44,7 +31,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100vw;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   overflow-x: hidden;
 }
 
@@ -73,20 +60,6 @@ body {
 .app-component__cover {
   width: 100vw;
   min-height: 100vh;
-}
-
-*::-webkit-scrollbar {
-  width: 7px; /* width of the entire scrollbar */
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent; /* color of the tracking area */
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: rgb(172, 172, 172); /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 3px solid transparent; /* creates padding around scroll thumb */
 }
 
 .backdrop {
@@ -149,7 +122,7 @@ body {
   .logo {
     font-size: 1.5rem;
     text-decoration: none;
-    font-family: 'Lobster', cursive;
+    font-family: "Lobster", cursive;
     font-weight: bold;
     color: #ff66cc;
 
@@ -239,7 +212,7 @@ body {
     margin-left: 1rem;
     font-size: 1.2rem;
     color: #ff66cc;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
 
     &:hover,
     &:focus,
@@ -279,7 +252,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0 10%;
-    padding: 1rem 0;
+    padding: 4rem 0;
     color: gray;
   }
 
@@ -287,8 +260,8 @@ body {
     margin: 1rem;
     width: auto;
     font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     font-weight: bold;
     text-decoration: none;
 
@@ -395,8 +368,8 @@ body {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  min-height: 100vh;
   width: 100%;
-  height: 100vh;
   background-color: #fff6fc;
   margin: 0;
   padding: 3rem 0;
@@ -499,7 +472,7 @@ body {
 
     .product-title {
       color: #2d2d24;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       width: 100%;
       font-size: 1.2rem;
       display: flex;
@@ -518,7 +491,7 @@ body {
     }
 
     .product-quantity {
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       margin: 0.5rem;
       font-weight: bold;
       padding: 0;
@@ -529,7 +502,7 @@ body {
 }
 
 .total-price {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: bold;
   width: 100%;
   padding: 0.5rem;
@@ -539,7 +512,7 @@ body {
   background-color: #ff00aa;
 
   .checkout {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     border: none;
     background-color: #fff;
     color: #ff00aa;
@@ -565,7 +538,7 @@ body {
 }
 
 .num_of__items {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
@@ -636,7 +609,7 @@ body {
   }
 
   .help-block {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1rem;
     color: red;
     margin-top: 0.5rem;
@@ -669,7 +642,7 @@ body {
     border: none;
     border-radius: 50px;
     background-color: #ff66cc;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 0.8rem;
     color: #fff;
     padding: 0.7rem;
@@ -715,7 +688,7 @@ body {
     span {
       background-color: #ff66cc;
       font-size: 1rem;
-      font-family: 'Montserrat' sans-serif;
+      font-family: "Montserrat" sans-serif;
       height: 3rem;
       color: #fff;
       display: flex;
@@ -732,7 +705,7 @@ textarea,
   width: 100%;
   height: 3rem;
   padding: 0.5rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 1.2rem;
   color: #ff66cc;
   -webkit-text-fill-color: #ff66cc;
@@ -786,7 +759,7 @@ input:-webkit-autofill.ng-invalid.ng-touched {
   border: none;
 }
 #image::before {
-  content: 'Add Image';
+  content: "Add Image";
   background-color: #ff66cc;
   border: 3px solid #ff66cc;
   font-size: 1rem;
@@ -842,7 +815,7 @@ p a {
     text-align: center;
     color: rgb(89, 85, 85);
     margin-bottom: 0.5rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     cursor: pointer;
   }
 
@@ -874,6 +847,20 @@ p a {
 
   @media (min-width: 48rem) {
     padding: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: unset; /* width of the entire scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: unset; /* color of the tracking area */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: unset;
+    border-radius: unset;
+    border: unset;
   }
 }
 
@@ -924,7 +911,7 @@ p a {
   z-index: 5;
 
   label {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 1.2rem;
   }
@@ -938,13 +925,13 @@ p a {
     padding: 0.3rem;
     font-size: 1rem;
     font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 
   button {
     background-color: #ff1cf7;
     margin: 0.5rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1rem;
     font-weight: normal;
     padding: 0.5rem 0.8rem;
@@ -1027,7 +1014,7 @@ p a {
     p {
       color: hsla(60, 11%, 16%, 0.8);
       font-size: 1.5rem;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       margin: 1rem 0;
     }
   }
@@ -1067,11 +1054,12 @@ p a {
       width: 100%;
       padding: 1.5rem;
       box-shadow: 1px 1px 3px rgba(255, 197, 236, 0.5);
+      cursor: pointer;
     }
 
     a {
       font-size: 1rem;
-      font-family: 'Open Sans', sans-serif;
+      font-family: "Open Sans", sans-serif;
       text-decoration: none;
       color: #2d2d24;
     }
@@ -1079,6 +1067,7 @@ p a {
 }
 
 .overview {
+  background-color: #ff66cc;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -1096,7 +1085,7 @@ p a {
 
   h1 {
     color: #fff;
-    font-family: 'Abril Fatface', cursive;
+    font-family: "Abril Fatface", cursive;
     font-weight: normal;
     margin: 1rem;
     font-size: 3rem;
@@ -1104,14 +1093,12 @@ p a {
     top: 15%;
     left: 2%;
     width: 20rem;
-    line-height: normal;
 
     @media (min-width: 48rem) {
       position: relative;
       margin-top: -10rem;
       font-size: 5rem;
       width: 30rem;
-      line-height: 5rem;
     }
     @media (min-width: 64rem) {
       margin-top: 1rem;
@@ -1120,7 +1107,6 @@ p a {
       left: 15%;
       font-size: 7rem;
       width: 40rem;
-      line-height: 7rem;
     }
   }
 }
@@ -1145,6 +1131,10 @@ p a {
 }
 #product-overview9 {
   background-image: url(./assets/images/background-9.jpg);
+}
+
+.lazy {
+  background-image: none !important;
 }
 
 #products-container,
@@ -1244,7 +1234,7 @@ app-product-item {
     width: 100%;
     font-size: 1rem;
     font-weight: normal;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: normal;
     display: flex;
     justify-content: center;
@@ -1308,7 +1298,7 @@ app-product-item {
 #empty-cart {
   display: flex;
   flex-direction: column;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   justify-content: center;
   align-items: center;
   margin: auto;
@@ -1321,7 +1311,7 @@ app-product-item {
   button {
     font-size: 1rem;
     padding: 1rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     background-color: #00e0f9;
     color: #fff;
@@ -1387,12 +1377,12 @@ app-product-item {
   h1 {
     margin-top: 2rem;
     font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 
   a {
     color: #ff00bf;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
 
     &:hover {
@@ -1418,18 +1408,18 @@ app-product-item {
 .new-in__lists {
   list-style: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  gap: 2rem;
   flex-wrap: nowrap;
   align-items: center;
-  width: 500%;
-  margin: 0;
+  width: 100%;
+  margin: 2rem 0;
   padding: 0;
-  transform: translateX(-20%);
 
   @media (min-width: 48rem) {
+    flex-direction: row;
     width: 100%;
-    transform: none;
   }
 
   @media (min-width: 80rem) {
@@ -1438,8 +1428,7 @@ app-product-item {
 }
 
 .new-in__product {
-  width: 100%;
-  margin: 1%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1451,31 +1440,21 @@ app-product-item {
 
   @media (min-width: 48rem) {
     width: 30%;
-    margin: 1.5%;
   }
 
   .new-image__cover {
-    width: 100vw;
-    height: 100vw;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     background: #eee;
     background: linear-gradient(90deg, #ececec 8%, #fff 18%, #ececec 33%);
     border-radius: 5px;
     background-size: 200% 100%;
     animation: 1.5s shine linear infinite;
-
-    @media (min-width: 48rem) {
-      width: 100%;
-      height: 30vw;
-    }
-
-    @media (min-width: 64rem) {
-      width: 100%;
-      height: auto;
-    }
   }
 
   .product-img {
     width: 100%;
+    height: auto;
   }
 
   .product-title {
@@ -1483,7 +1462,7 @@ app-product-item {
     color: #2d2d24;
     width: 100%;
     font-size: 1rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: normal;
     display: flex;
     justify-content: center;
@@ -1601,7 +1580,7 @@ app-product-item {
   align-items: center;
   padding: 4rem 0;
   background: #ff7ad3;
-  font-family: 'Graphik Web', Helvetica, sans-serif;
+  font-family: "Graphik Web", Helvetica, sans-serif;
   color: #fff;
 
   .sign-up__title {
@@ -1653,7 +1632,7 @@ app-product-item {
     font-size: 1.2rem;
     font-weight: bold;
     margin: 2.5rem 0 4rem 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     text-decoration: none;
 
     @media (min-width: 46rem) {
@@ -1725,7 +1704,7 @@ app-product-item {
       margin: 0;
       margin-top: 1rem;
       padding: 0;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
     }
 
     p {
@@ -1733,7 +1712,7 @@ app-product-item {
       margin: 3rem 2rem;
       font-weight: normal;
       font-size: 1rem;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       color: #2d2d24;
     }
   }

@@ -3,7 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { LikesComponent } from './likes/likes.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProductsResolverService } from './products/products-resolver.service';
 import { DetailsComponent } from './profile/details/details.component';
 
 const routes: Routes = [
@@ -11,6 +10,8 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
+
+  { path: 'not-found', component: PageNotFoundComponent },
 
   {
     path: 'products',
@@ -40,25 +41,20 @@ const routes: Routes = [
     path: 'modify-products',
     loadChildren: () =>
       import('./admin/modify-products/modify-products.module').then(
-        (m) => m.ModifyProductsModule,
+        (m) => m.ModifyProductsModule
       ),
   },
   { path: 'saved-item', component: LikesComponent, canActivate: [AuthGuard] },
   { path: 'my-details', component: DetailsComponent, canActivate: [AuthGuard] },
-  {
-    path: 'not-found',
-    component: PageNotFoundComponent,
-    resolve: [ProductsResolverService],
-  },
   { path: '**', redirectTo: '/not-found' },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'enabled',
-    preloadingStrategy: PreloadAllModules
-}),
+      scrollPositionRestoration: 'enabled',
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
 })
