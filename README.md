@@ -1,6 +1,6 @@
 # A Demo Shopping Web App
 
-### This app is a Server side Rendered App (nguniversal) connected to a restApi developed with Angular, ExpressJs and MongoDB [link](https://royalebiba-angular.web.app/)
+### This app is a Server side Rendered App (nguniversal) connected to a restApi developed with Angular, ExpressJs and MongoDB [Visi Site](https://royalebiba-angular.web.app/)
 
 ## Features
 
