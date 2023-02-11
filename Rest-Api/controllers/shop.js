@@ -48,8 +48,6 @@ exports.getProducts = async (req, res, next) => {
   try {
     const products = await Product.find();
 
-    // if (!preoducts) {}
-
     res.status(200).json({ message: 'Feched successfully!', products });
   } catch (err) {
     console.log(err);
