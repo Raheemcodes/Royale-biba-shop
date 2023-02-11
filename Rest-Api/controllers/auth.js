@@ -10,13 +10,9 @@ const { validationResult } = require('express-validator');
 const User = require('../models/user');
 
 const CLIENT_ID = process.env.CLIENT_ID;
-
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-
 const REDIRECT_URI = process.env.REDIRECT_URI;
-
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-
 const FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
 
 const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);

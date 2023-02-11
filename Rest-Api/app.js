@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 
@@ -38,22 +37,22 @@ const fileFilter = (req, file, cb) => {
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, 'access.log'),
-  { flags: 'a' },
+  { flags: 'a' }
 );
 
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
-  }),
+  })
 );
 
 app.use(compression());
 app.use(morgan('combined', { stream: accessLogStream }));
 
-bodyParser.urlencoded({ extended: true })
-app.use(bodyParser.json()); // application/json
+express.urlencoded({ extended: true });
+app.use(express.json()); // application/json
 app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'),
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 );
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
@@ -61,7 +60,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.ACCESS_ORIGIN);
   res.setHeader(
     'Access-Control-Allow-Methods',
-    'OPTIONS, GET, POST, PUT, PATCH, DELETE',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
   );
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
@@ -79,12 +78,15 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
+  .set('strictQuery', false)
   .connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.u4041.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.u4041.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`
   )
   .then(() => {
     console.log('Database connected');
-    app.listen(process.env.PORT || 5000);
+
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server listening at port: ${process.env.PORT || 5000}`);
+    });
   })
   .catch((err) => console.log(err));

@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private productsService: ProductsService,
     private authService: AuthService,
     private cartService: CartService,
+    @Inject('Window') private window: Window,
     @Inject(PLATFORM_ID) private platformId
   ) {}
 
@@ -176,9 +177,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         lazyloadThrottleTimeout = setTimeout(() => {
-          const scrollTop = window.pageYOffset;
+          const scrollTop = this.window.pageYOffset;
           lazyloadImages.forEach((img) => {
-            if (img.offsetTop < window.innerHeight + scrollTop + 200) {
+            if (img.offsetTop < this.window.innerHeight + scrollTop + 200) {
               img.src = img.dataset.src;
               img.alt = img.dataset.alt;
               img.classList.remove('lazy');
@@ -186,20 +187,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           });
           if (lazyloadImages.length == 0) {
             document.removeEventListener('scroll', lazyload);
-            window.removeEventListener('resize', lazyload);
-            window.removeEventListener('orientationChange', lazyload);
+            this.window.removeEventListener('resize', lazyload);
+            this.window.removeEventListener('orientationChange', lazyload);
           }
         }, 20);
       }
 
       document.addEventListener('scroll', lazyload);
-      window.addEventListener('resize', lazyload);
-      window.addEventListener('orientationChange', lazyload);
+      this.window.addEventListener('resize', lazyload);
+      this.window.addEventListener('orientationChange', lazyload);
     }
   }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
-    // window.removeAllListeners('resize');
+    // this.window.removeAllListeners('resize');
   }
 }

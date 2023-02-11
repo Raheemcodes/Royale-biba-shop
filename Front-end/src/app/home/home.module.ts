@@ -18,7 +18,8 @@ import { HomeRoutingModule } from './home-routing.module';
     RouterModule,
     HttpClientModule,
     ValidateEqualModule,
-    HomeRoutingModule
+    HomeRoutingModule,
   ],
+  providers: [{ provide: 'Window', useValue: window }],
 })
 export class HomeModule {}

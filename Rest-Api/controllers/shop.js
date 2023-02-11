@@ -1,40 +1,41 @@
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
 
 const Product = require('../models/product');
 const User = require('../models/user');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 const PDFDocument = require('pdfkit');
 
-exports.purchaseProduct = async (req, res, next) =>  {
+const SERVER_ADDRESS = process.env.SERVER_ADDRESS;
+const FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
+
+exports.purchaseProduct = async (req, res, next) => {
   try {
     const prodId = req.body.productId;
     const product = await Product.findById(prodId);
-    const quantity = req.body.quantity
+    const quantity = req.body.quantity;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
           name: product.title,
+          images: [
+            url.resolve(
+              SERVER_ADDRESS || 'https://royale-biba-shop.onrender.com',
+              product.imageUrl
+            ),
+          ],
           description: product.description,
           amount: product.price * 100,
           currency: 'usd',
           quantity: quantity,
         },
       ],
-      success_url: `${process.env.SERVER_ADDRESS}/checkout/${req.userId}`, // => http://localhost:3500
-      cancel_url: process.env.FRONTEND_ADDRESS + '/products/' + prodId,
+      success_url: `${SERVER_ADDRESS}/checkout/${req.userId}`, // => http://localhost:3500
+      cancel_url: FRONTEND_ADDRESS + '/products/' + prodId,
     });
-
-    // res.render('shop/product', {
-    //   prod: product,
-    //   pageTitle: 'Product',
-    //   cartQuantity: totalQuantity,
-    //   searchInfo: '',
-    //   sessionId: session.id,
-    // });
     res.status(200).json({ message: 'Feched successfully!', session });
   } catch (err) {
     const error = new Error(err);
@@ -90,7 +91,7 @@ exports.getBag = async (req, res, next) => {
 
     const totalQuantity = products.reduce(
       (prevVal, curVal) => prevVal + curVal.quantity,
-      0,
+      0
     );
 
     if (products.length > 0) {
@@ -100,7 +101,12 @@ exports.getBag = async (req, res, next) => {
           return {
             name: p.productId.title,
             description: p.productId.description,
-            images: [p.productId.imageUrl],
+            images: [
+              url.resolve(
+                SERVER_ADDRESS || 'https://royale-biba-shop.onrender.com',
+                p.productId.imageUrl
+              ),
+            ],
             amount: p.productId.price * 100,
             currency: 'usd',
             quantity: p.quantity,
@@ -187,7 +193,7 @@ exports.deleteBag = async (req, res, next) => {
     const products = prod.cart.items;
     const totalPrice = products.reduce(
       (prevVal, curVal) => prevVal + curVal.productId.price * curVal.quantity,
-      0,
+      0
     );
 
     res.status(200).json({ message: 'Product deleted!', totalPrice });
@@ -220,7 +226,7 @@ exports.getInvoice = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
       'Content-Disposition',
-      'inline; filename="' + invoiceName + '"',
+      'inline; filename="' + invoiceName + '"'
     );
     // pdfDoc.pipe(fs.createWriteStream(invoicePath));
     pdfDoc.pipe(res);
@@ -248,7 +254,7 @@ exports.getInvoice = async (req, res, next) => {
         {
           align: 'right',
         },
-        140,
+        140
       )
       .fill('#000')
       .text(
@@ -256,7 +262,7 @@ exports.getInvoice = async (req, res, next) => {
         {
           align: 'right',
         },
-        170,
+        170
       )
       .fill('#000')
       .text(
@@ -264,7 +270,7 @@ exports.getInvoice = async (req, res, next) => {
         {
           align: 'right',
         },
-        250,
+        250
       )
       .text(`${user.email} \n 17, xyz street, Agege, \n Lagos State.`, {
         align: 'right',

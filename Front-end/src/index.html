@@ -21,8 +21,12 @@
       property="og:description"
       content="RoyaleBiba's online makeup products store"
     />
+    <meta name="theme-color" content="#ff66cc" />
+    <!-- <meta name="referrer" content="no-referrer-when-downgrade" /> -->
+
     <title>RoyaleBibaAngular</title>
     <base href="/" />
+
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="70x18" href="./favicon.ico" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -35,7 +39,9 @@
       rel="stylesheet"
     />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#ff66cc" />
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
     <app-root></app-root>

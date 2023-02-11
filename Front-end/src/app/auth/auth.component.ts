@@ -7,12 +7,12 @@ import {
   OnDestroy,
   OnInit,
   PLATFORM_ID,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -36,28 +36,55 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private socialAuthService: SocialAuthService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId
   ) {}
 
   ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe((user) => {
-      if (!!user) {
-        this.router.navigate(['../'], {relativeTo: this.route});
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.userSub = this.authService.user.subscribe((user) => {
+        if (!!user) {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        }
+      });
+    }
   }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-    const authForm = this.authForm.nativeElement;
-    this.backdrop = document.querySelector('.backdrop');
-    this.loginTitle = authForm.querySelector('.login-title');
-    this.signupTitle = authForm.querySelector('.signup-title');
-    this.formContainer = authForm.querySelector('.form-container');
-    this.underline = authForm.querySelector('hr');
+      const authForm = this.authForm.nativeElement;
+      this.backdrop = document.querySelector('.backdrop');
+      this.loginTitle = authForm.querySelector('.login-title');
+      this.signupTitle = authForm.querySelector('.signup-title');
+      this.formContainer = authForm.querySelector('.form-container');
+      this.underline = authForm.querySelector('hr');
+
       this.openLoginForm();
+      this.load();
     }
+  }
+
+  load() {
+    const btns: NodeListOf<HTMLButtonElement> =
+      document.querySelectorAll('.google-login__btn');
+
+    google.accounts.id.initialize({
+      client_id: environment.clientId,
+      callback: this.onGoogleAuth.bind(this),
+    });
+
+    btns.forEach((btn) => {
+      google.accounts.id.renderButton(
+        btn,
+        {
+          type: 'standard',
+          theme: 'outline',
+          size: 'large',
+          text: 'signin_with',
+        } // customization attributes
+      );
+    });
+
+    google.accounts.id.prompt();
   }
 
   onLogin(form: NgForm) {
@@ -73,11 +100,11 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(resData);
         form.reset();
         this.closeForm(this.authForm.nativeElement);
-        this.router.navigate(['../'], {relativeTo: this.route});
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
       (errorMessage) => {
         this.error = errorMessage;
-      },
+      }
     );
   }
 
@@ -100,18 +127,9 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         (errorMessage: any) => {
           this.error = errorMessage;
-        },
+        }
       );
   }
-
-  // openSinupForm() {
-  //   const authForm = this.authForm.nativeElement;
-  //   setTimeout(() => {
-  //     this.backdrop.style.display = 'block';
-  //     authForm.style.display = 'flex';
-  //     this.signupControl();
-  //   }, 300);
-  // }
 
   openLoginForm() {
     const authForm = this.authForm.nativeElement;
@@ -150,21 +168,18 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
     this.formContainer.style.transform = 'translateX(0)';
   }
 
-  async onGoogleAuth() {
-    const { idToken } = await this.socialAuthService.signIn(
-      GoogleLoginProvider.PROVIDER_ID,
-    );
+  onGoogleAuth(response: google.accounts.id.CredentialResponse) {
+    const { credential } = response;
 
-    this.authService.googleAuth(idToken).subscribe(
-      (resData) => {
+    this.authService.googleAuth(credential).subscribe({
+      next: (resData) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
         console.log(resData);
-        this.closeForm(this.authForm.nativeElement);
-        this.router.navigate(['../'], {relativeTo: this.route});
       },
-      (errorMessage) => {
+      error: (errorMessage) => {
         this.error = errorMessage;
       },
-    );
+    });
   }
 
   onClose() {
@@ -172,12 +187,13 @@ export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   backButton() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
     this.backdrop.style.display = 'none';
   }
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-    this.backdrop.style.display = 'none';}
+      this.backdrop.style.display = 'none';
+    }
   }
 }

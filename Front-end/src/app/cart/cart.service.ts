@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { loadStripe } from '@stripe/stripe-js/pure';
 import { Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Cart } from './cart.model';
@@ -53,12 +52,12 @@ export class CartService {
       .pipe(
         tap((resData: any) => {
           this.fetchcart().subscribe();
-        }),
+        })
       );
   }
 
-  async checkout() {
-    const stripe = await loadStripe(this.publicKey);
+  checkout() {
+    const stripe = Stripe(this.publicKey);
 
     stripe.redirectToCheckout({
       sessionId: this.session,
@@ -104,7 +103,7 @@ export class CartService {
         this.setTotalPrice(data.totalPrice);
         this.setTotalQuantity(data.totalQuantity);
         this.session = data.session.id;
-      }),
+      })
     );
   }
 }
