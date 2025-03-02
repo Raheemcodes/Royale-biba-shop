@@ -4,17 +4,17 @@
 
 ## Features
 
-### - Authentication
+- ### Authentication
 
-### - Search, Edit, Deleting of Products
+- ### Search, Edit, Deleting of Products
 
-### - Demo Purchase / payment (stripe)
+- ### Demo Purchase / payment (stripe)
 
-### - Orders / Orders List
+- ### Orders / Orders List
 
-### - Profile
+- ### Profile
 
-### - Invoice / Receipt Generation
+- ### Invoice / Receipt Generation
 
 ## Note:
 
